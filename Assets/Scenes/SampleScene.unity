@@ -883,8 +883,8 @@ MonoBehaviour:
   goPanel: {fileID: 138732853}
   hexPrefab: {fileID: 3641497309368948487, guid: c7e373d9ee19dd54e9dab230543b1f66, type: 3}
   bombPrefab: {fileID: 2410278340814368409, guid: e27d0350fb2cf524abef1e6a2a7aad69, type: 3}
-  gridWidth: 2
-  gridHeight: 3
+  gridWidth: 8
+  gridHeight: 9
   gap: 0.1
   bombScore: 1000
   colors:
