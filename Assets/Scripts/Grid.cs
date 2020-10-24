@@ -20,7 +20,7 @@ public class Grid : MonoBehaviour
     public int bombScore = 1000;
 
     bool bomb;
-    int left, right, p, score, score2, turn;
+    int left, right, p, s, score, score2, turn;
     float angle, angleMax;
     float hexWidth = 0.665f;
     float hexHeight = 0.577f;
@@ -99,7 +99,7 @@ public class Grid : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
-            if (left == 0 && right == 0)
+            if (left == 0 && right == 0 && s == 0)
             {
                 endTouchPosition = Input.mousePosition; //2. noktaı ayarladık
 
@@ -291,6 +291,7 @@ public class Grid : MonoBehaviour
 
     void ControlColors() //grid deki patlamaya hazır üçlü grupları kontrol ediyoruz.
     {
+        s = 1; //kontrol bitmeden başka altıgen seçmesini engelledik
         //dönen altıgenlerin kordinat sistemindeki yeri değiştiği için isimlerini de değiştiriyoruz.
         if (left == 1)
         {
@@ -508,7 +509,103 @@ public class Grid : MonoBehaviour
         }
 
         //Yine bir algoritma ile olabilecek olasılıkları kontrol ettik. Eğer olasılık varsa bu fonksiyondan çıkıyoruz.
-        for (int x = 2; x < gridWidth - 1; x += 2)
+        for (int y = 1; y < gridHeight - 1; y++) //sol sütun
+        {
+            if (cntObj[0, y - 1].GetComponent<SpriteRenderer>().material.color == cntObj[1, y - 1].GetComponent<SpriteRenderer>().material.color)
+            {
+                if (cntObj[0, y - 1].GetComponent<SpriteRenderer>().material.color == cntObj[1, y].GetComponent<SpriteRenderer>().material.color)
+                {
+                    s = 0;
+                    return;
+                }
+                else if (cntObj[0, y - 1].GetComponent<SpriteRenderer>().material.color == cntObj[0, y + 1].GetComponent<SpriteRenderer>().material.color)
+                {
+                    s = 0;
+                    return;
+                }
+            }
+            if (cntObj[0, y - 1].GetComponent<SpriteRenderer>().material.color == cntObj[1, y].GetComponent<SpriteRenderer>().material.color)
+            {
+                if (cntObj[0, y - 1].GetComponent<SpriteRenderer>().material.color == cntObj[0, y + 1].GetComponent<SpriteRenderer>().material.color)
+                {
+                    s = 0;
+                    return;
+                }
+            }
+            if (cntObj[1, y - 1].GetComponent<SpriteRenderer>().material.color == cntObj[1, y].GetComponent<SpriteRenderer>().material.color)
+            {
+                if (cntObj[1, y - 1].GetComponent<SpriteRenderer>().material.color == cntObj[0, y + 1].GetComponent<SpriteRenderer>().material.color)
+                {
+                    s = 0;
+                    return;
+                }
+            }
+            if (cntObj[0, y].GetComponent<SpriteRenderer>().material.color == cntObj[0, y - 1].GetComponent<SpriteRenderer>().material.color)
+            {
+                if (cntObj[0, y].GetComponent<SpriteRenderer>().material.color == cntObj[1, y].GetComponent<SpriteRenderer>().material.color)
+                {
+                    s = 0;
+                    return;
+                }
+            }
+            if (cntObj[0, y].GetComponent<SpriteRenderer>().material.color == cntObj[1, y - 1].GetComponent<SpriteRenderer>().material.color)
+            {
+                if (cntObj[0, y].GetComponent<SpriteRenderer>().material.color == cntObj[0, y + 1].GetComponent<SpriteRenderer>().material.color)
+                {
+                    s = 0;
+                    return;
+                }
+            }
+        }
+        for (int y = 1; y < gridHeight - 1; y++) //sağ sütun
+        {
+            if (cntObj[gridWidth - 1, y - 1].GetComponent<SpriteRenderer>().material.color == cntObj[gridWidth - 2, y].GetComponent<SpriteRenderer>().material.color)
+            {
+                if (cntObj[gridWidth - 1, y - 1].GetComponent<SpriteRenderer>().material.color == cntObj[gridWidth - 2, y + 1].GetComponent<SpriteRenderer>().material.color)
+                {   
+                    s = 0;
+                    return;
+                }
+                else if (cntObj[gridWidth - 1, y - 1].GetComponent<SpriteRenderer>().material.color == cntObj[gridWidth - 1, y + 1].GetComponent<SpriteRenderer>().material.color)
+                {
+                    s = 0;
+                    return;
+                }
+            }
+            if (cntObj[gridWidth - 1, y - 1].GetComponent<SpriteRenderer>().material.color == cntObj[gridWidth - 2, y + 1].GetComponent<SpriteRenderer>().material.color)
+            {
+                if (cntObj[gridWidth - 1, y - 1].GetComponent<SpriteRenderer>().material.color == cntObj[gridWidth - 1, y + 1].GetComponent<SpriteRenderer>().material.color)
+                {
+                    s = 0;
+                    return;
+                }
+            }
+            if (cntObj[gridWidth - 2, y].GetComponent<SpriteRenderer>().material.color == cntObj[gridWidth - 2, y + 1].GetComponent<SpriteRenderer>().material.color)
+            {
+                if (cntObj[gridWidth - 2, y].GetComponent<SpriteRenderer>().material.color == cntObj[gridWidth - 1, y + 1].GetComponent<SpriteRenderer>().material.color)
+                {
+                    s = 0;
+                    return;
+                }
+            }
+            if (cntObj[gridWidth - 1, y].GetComponent<SpriteRenderer>().material.color == cntObj[gridWidth - 1, y - 1].GetComponent<SpriteRenderer>().material.color)
+            {
+                if (cntObj[gridWidth - 1, y].GetComponent<SpriteRenderer>().material.color == cntObj[gridWidth - 2, y + 1].GetComponent<SpriteRenderer>().material.color)
+                {
+                    s = 0;
+                    return;
+                }
+            }
+            if (cntObj[gridWidth - 1, y].GetComponent<SpriteRenderer>().material.color == cntObj[gridWidth - 2, y].GetComponent<SpriteRenderer>().material.color)
+            {
+                if (cntObj[gridWidth - 1, y].GetComponent<SpriteRenderer>().material.color == cntObj[gridWidth - 1, y + 1].GetComponent<SpriteRenderer>().material.color)
+                {
+                    s = 0;
+                    return;
+                }
+            }
+        }
+        for (int x = 2; x < gridWidth - 1; x += 2) //x değeri çift olanlar
         {
             for (int y = 1; y < gridHeight - 1; y++)
             {
@@ -516,10 +613,12 @@ public class Grid : MonoBehaviour
                 {
                     if (cntObj[x, y].GetComponent<SpriteRenderer>().material.color == cntObj[x + 1, y].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                     else if (cntObj[x, y].GetComponent<SpriteRenderer>().material.color == cntObj[x - 1, y].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                 }
@@ -527,10 +626,12 @@ public class Grid : MonoBehaviour
                 {
                     if (cntObj[x, y].GetComponent<SpriteRenderer>().material.color == cntObj[x, y + 1].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                     else if (cntObj[x, y].GetComponent<SpriteRenderer>().material.color == cntObj[x - 1, y - 1].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                 }
@@ -539,18 +640,22 @@ public class Grid : MonoBehaviour
                 {
                     if (cntObj[x, y - 1].GetComponent<SpriteRenderer>().material.color == cntObj[x + 1, y].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                     else if (cntObj[x, y - 1].GetComponent<SpriteRenderer>().material.color == cntObj[x, y + 1].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                     else if (cntObj[x, y - 1].GetComponent<SpriteRenderer>().material.color == cntObj[x - 1, y].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                     else if (cntObj[x, y - 1].GetComponent<SpriteRenderer>().material.color == cntObj[x - 1, y - 1].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                 }
@@ -558,10 +663,12 @@ public class Grid : MonoBehaviour
                 {
                     if (cntObj[x, y - 1].GetComponent<SpriteRenderer>().material.color == cntObj[x, y + 1].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                     else if (cntObj[x, y - 1].GetComponent<SpriteRenderer>().material.color == cntObj[x - 1, y - 1].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                 }
@@ -569,10 +676,12 @@ public class Grid : MonoBehaviour
                 {
                     if (cntObj[x, y - 1].GetComponent<SpriteRenderer>().material.color == cntObj[x - 1, y].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                     else if (cntObj[x, y - 1].GetComponent<SpriteRenderer>().material.color == cntObj[x - 1, y - 1].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                 }
@@ -580,6 +689,7 @@ public class Grid : MonoBehaviour
                 {
                     if (cntObj[x, y - 1].GetComponent<SpriteRenderer>().material.color == cntObj[x - 1, y - 1].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                 }
@@ -588,14 +698,17 @@ public class Grid : MonoBehaviour
                 {
                     if (cntObj[x + 1, y - 1].GetComponent<SpriteRenderer>().material.color == cntObj[x, y + 1].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                     else if (cntObj[x + 1, y - 1].GetComponent<SpriteRenderer>().material.color == cntObj[x - 1, y].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                     else if (cntObj[x + 1, y - 1].GetComponent<SpriteRenderer>().material.color == cntObj[x - 1, y - 1].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                 }
@@ -603,10 +716,12 @@ public class Grid : MonoBehaviour
                 {
                     if (cntObj[x + 1, y - 1].GetComponent<SpriteRenderer>().material.color == cntObj[x - 1, y].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                     else if (cntObj[x + 1, y - 1].GetComponent<SpriteRenderer>().material.color == cntObj[x - 1, y - 1].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                 }
@@ -614,6 +729,7 @@ public class Grid : MonoBehaviour
                 {
                     if (cntObj[x + 1, y - 1].GetComponent<SpriteRenderer>().material.color == cntObj[x - 1, y - 1].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                 }
@@ -622,10 +738,12 @@ public class Grid : MonoBehaviour
                 {
                     if (cntObj[x + 1, y - 1].GetComponent<SpriteRenderer>().material.color == cntObj[x - 1, y].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                     else if (cntObj[x + 1, y - 1].GetComponent<SpriteRenderer>().material.color == cntObj[x - 1, y - 1].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                 }
@@ -633,6 +751,7 @@ public class Grid : MonoBehaviour
                 {
                     if (cntObj[x + 1, y - 1].GetComponent<SpriteRenderer>().material.color == cntObj[x - 1, y - 1].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                 }
@@ -641,12 +760,13 @@ public class Grid : MonoBehaviour
                 {
                     if (cntObj[x, y + 1].GetComponent<SpriteRenderer>().material.color == cntObj[x - 1, y - 1].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                 }
             }
         }
-        for (int x = 1; x < gridWidth - 1; x += 2)
+        for (int x = 1; x < gridWidth - 1; x += 2) //x değeri tek olanlar
         {
             for (int y = 1; y < gridHeight - 1; y++)
             {
@@ -654,10 +774,12 @@ public class Grid : MonoBehaviour
                 {
                     if (cntObj[x, y].GetComponent<SpriteRenderer>().material.color == cntObj[x + 1, y + 1].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                     else if (cntObj[x, y].GetComponent<SpriteRenderer>().material.color == cntObj[x - 1, y + 1].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                 }
@@ -665,10 +787,12 @@ public class Grid : MonoBehaviour
                 {
                     if (cntObj[x, y].GetComponent<SpriteRenderer>().material.color == cntObj[x, y + 1].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                     else if (cntObj[x, y].GetComponent<SpriteRenderer>().material.color == cntObj[x - 1, y].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                 }
@@ -677,18 +801,22 @@ public class Grid : MonoBehaviour
                 {
                     if (cntObj[x, y - 1].GetComponent<SpriteRenderer>().material.color == cntObj[x + 1, y + 1].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                     else if (cntObj[x, y - 1].GetComponent<SpriteRenderer>().material.color == cntObj[x, y + 1].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                     else if (cntObj[x, y - 1].GetComponent<SpriteRenderer>().material.color == cntObj[x - 1, y + 1].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                     else if (cntObj[x, y - 1].GetComponent<SpriteRenderer>().material.color == cntObj[x - 1, y - 1].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                 }
@@ -696,10 +824,12 @@ public class Grid : MonoBehaviour
                 {
                     if (cntObj[x, y - 1].GetComponent<SpriteRenderer>().material.color == cntObj[x, y + 1].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                     else if (cntObj[x, y - 1].GetComponent<SpriteRenderer>().material.color == cntObj[x - 1, y].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                 }
@@ -707,10 +837,12 @@ public class Grid : MonoBehaviour
                 {
                     if (cntObj[x, y - 1].GetComponent<SpriteRenderer>().material.color == cntObj[x - 1, y + 1].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                     else if (cntObj[x, y - 1].GetComponent<SpriteRenderer>().material.color == cntObj[x - 1, y].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                 }
@@ -718,6 +850,7 @@ public class Grid : MonoBehaviour
                 {
                     if (cntObj[x, y - 1].GetComponent<SpriteRenderer>().material.color == cntObj[x - 1, y].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                 }
@@ -726,14 +859,17 @@ public class Grid : MonoBehaviour
                 {
                     if (cntObj[x + 1, y].GetComponent<SpriteRenderer>().material.color == cntObj[x, y + 1].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                     else if (cntObj[x + 1, y].GetComponent<SpriteRenderer>().material.color == cntObj[x - 1, y + 1].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                     else if (cntObj[x + 1, y].GetComponent<SpriteRenderer>().material.color == cntObj[x - 1, y].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                 }
@@ -741,10 +877,12 @@ public class Grid : MonoBehaviour
                 {
                     if (cntObj[x + 1, y].GetComponent<SpriteRenderer>().material.color == cntObj[x - 1, y + 1].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                     else if (cntObj[x + 1, y].GetComponent<SpriteRenderer>().material.color == cntObj[x - 1, y].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                 }
@@ -752,6 +890,7 @@ public class Grid : MonoBehaviour
                 {
                     if (cntObj[x + 1, y].GetComponent<SpriteRenderer>().material.color == cntObj[x - 1, y].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                 }
@@ -760,10 +899,12 @@ public class Grid : MonoBehaviour
                 {
                     if (cntObj[x + 1, y + 1].GetComponent<SpriteRenderer>().material.color == cntObj[x - 1, y + 1].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                     else if (cntObj[x + 1, y + 1].GetComponent<SpriteRenderer>().material.color == cntObj[x - 1, y].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                 }
@@ -771,6 +912,7 @@ public class Grid : MonoBehaviour
                 {
                     if (cntObj[x + 1, y + 1].GetComponent<SpriteRenderer>().material.color == cntObj[x - 1, y].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                 }
@@ -779,6 +921,7 @@ public class Grid : MonoBehaviour
                 {
                     if (cntObj[x, y + 1].GetComponent<SpriteRenderer>().material.color == cntObj[x - 1, y].GetComponent<SpriteRenderer>().material.color)
                     {
+                        s = 0;
                         return;
                     }
                 }

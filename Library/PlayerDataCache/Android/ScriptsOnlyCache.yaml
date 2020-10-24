@@ -65,17 +65,17 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 12816}
     - Class: 114
-      Script: {instanceID: 13594}
+      Script: {instanceID: 13592}
     - Class: 114
-      Script: {instanceID: 14160}
+      Script: {instanceID: 14158}
     - Class: 114
-      Script: {instanceID: 14412}
+      Script: {instanceID: 14410}
     - Class: 114
-      Script: {instanceID: 14764}
+      Script: {instanceID: 14762}
     - Class: 114
-      Script: {instanceID: 15050}
+      Script: {instanceID: 15048}
     - Class: 114
-      Script: {instanceID: 28692}
+      Script: {instanceID: 15440}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -604,4 +604,4 @@ ScriptsOnlyBuild:
   platform: 13
   scenePathNames:
   - Assets/Scenes/SampleScene.unity
-  playerPath: C:/Users/afupc/Desktop/HexagonAhmet.apk
+  playerPath: C:/Users/afupc/Desktop/HexagonAhmetFaruk.apk
